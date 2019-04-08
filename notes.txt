@@ -1,0 +1,98 @@
+Rest
+Es solo una convención: Es una manera de comunicarse entre el servidor y cliente, cada uno tiene sus reglas.
+GraphQL
+Lenguaje tipado y validable: Le damos una forma de lo que recibe y lo que devolvemos. Ademas que le agrega seguridad
+
+Rest
+Servidor expone recursos: Los clientes se tienen que adecuarse a como están expuestos
+GraphQL
+El cliente define que recibe: Haciendo una consulta, de la estructura que define como respuesta
+
+Rest
+Hace overfetching: Envía más información que necesita
+GraphQL
+Envía lo necesario: Se tiene control total de las respuestas que se esperan del servidor
+
+Rest
+Multiples request por vista: Muy costoso en performance, básicamente es una aplicación en blanco que aún no ha cargado datos o tiene custom endpoints
+GraphQL
+Hace solo un request por vista: Enviados en un solo row
+
+Rest
+Documentación ajena al desarrollo: No hay un estándar por lo que depende mucho del desarrollador para mantenerla.
+GraphQL
+Documentado por definición: Al ser un lenguaje tipado se define un schema que ya esta documentado por definiciòn
+
+
+================Schema Types===============
+
+Scalars:
+		Int - Números enteros
+		Float - Números decimales
+		String - Cadenas de texto
+		Boolean - Verdadero o Falso
+		ID - Identificador único
+Objects
+		type [entity name]
+		
+Enums	
+		enum Curso {
+		     // Listado de las opciones posibles
+		   REACT
+		   GRAPHQL
+		   REDUX
+		}
+Interfaces
+		interface Perfil{
+		  nombre: String!
+		  mail: String!
+		}
+
+		type customPerfil implements Perfil{
+		  nombre: String! 
+		  mail: String!
+		  otroDato: String
+		}
+
+Unions
+    union Busqueda = Profesor | Curso 
+    
+       // Objecto en el que se realiza la busqueda
+       type Curso {
+           id: ID!
+           descripcion: String
+           profesores: [Profesor]
+       }
+    
+       // Objecto en el que se realiza la busqueda
+       type Profesor {
+           id: ID!
+           nombre: String
+           edad: Int
+           tieneCurso: Boolean
+       }
+    
+       // Objecto que muestra el resultado de la busqueda
+       type QueryBusqueda {
+           // Al usar [] indica que puede ser 1 o mas valores
+           // practicamente puede ser una lista
+           results: [Busqueda]
+       }
+	   
+	   
+=============Modificadores de Tipo==========
+! - requerido
+[] - lista
+
+============Query: endpoints============
+
+type: Query {
+	cursos: [Curso]
+}
+
+=========Mutation===========
+
+type: Mutation	{
+
+	agregaCurso (params) : Curso
+}
